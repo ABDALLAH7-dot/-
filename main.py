@@ -74,3 +74,40 @@ async def today(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     await update.message.reply_text(text)
+async def next_prayer(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    timings = get_prayer_times()
+
+    now = datetime.now()
+
+    prayers = [
+        ("الفجر", timings["Fajr"]),
+        ("الظهر", timings["Dhuhr"]),
+        ("العصر", timings["Asr"]),
+        ("المغرب", timings["Maghrib"]),
+        ("العشاء", timings["Isha"]),
+    ]
+
+    for name, time_str in prayers:
+        prayer_time = datetime.strptime(time_str, "%H:%M").replace(
+            year=now.year,
+            month=now.month,
+            day=now.day,
+        )
+
+        if prayer_time > now:
+            await update.message.reply_text(
+                f"🕌 الصلاة القادمة: {name}\n⏰ الوقت: {time_str}"
+            )
+            return
+
+    await update.message.reply_text("انتهت صلوات اليوم.")
+    app = Application.builder().token(BOT_TOKEN).build()
+
+app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("stop", stop))
+app.add_handler(CommandHandler("today", today))
+app.add_handler(CommandHandler("next", next_prayer))
+
+print("Bot Started...")
+
+app.run_polling()
