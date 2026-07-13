@@ -1,1 +1,4 @@
-# -
+BOT_TOKEN = "8685917049:AAFauLfw57z3Q2GeII7Ir8hIPKNaavfeRDc"
+
+CITY = "Hit"
+COUNTRY = "IQ"
