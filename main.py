@@ -100,7 +100,7 @@ async def next_prayer(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             return
 
-      await update.message.reply_text("انتهت صلوات اليوم.")
+    await update.message.reply_text("انتهت صلوات اليوم.")
 
 app = Application.builder().token(BOT_TOKEN).build()
 
